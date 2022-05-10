@@ -10,6 +10,7 @@ export const checkAuth = ({
   req: express.Request;
   next: NextFunction;
 }) => {
+  console.log(req);
   if (req.method === "OPTIONS") {
     return next();
   }
