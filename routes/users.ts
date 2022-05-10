@@ -2,7 +2,7 @@ import express from "express";
 import { check } from "express-validator";
 
 import { deleteUser, login, signup, updateUser } from "../controllers/users";
-// import { checkAuth } from "../middleware/check-auth";
+import { checkAuth, checkAuth } from "../middleware/check-auth";
 import { fileUpload } from "../middleware/file-upload";
 
 const router = express.Router();
@@ -19,7 +19,7 @@ router.post(
 );
 router.post("/login", login);
 
-// router.use(checkAuth);
+router.use(checkAuth);
 
 router.patch(
   "/:uid",
