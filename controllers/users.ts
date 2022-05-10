@@ -199,8 +199,6 @@ export const deleteUser = async (
 
   const imagePath = user.image;
 
-  console.log(user);
-
   try {
     const session = await mongoose.startSession();
     session.startTransaction();
