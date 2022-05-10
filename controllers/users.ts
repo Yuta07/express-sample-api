@@ -6,11 +6,13 @@ import jwt from "jsonwebtoken";
 import HttpError from "../models/http-error";
 import User from "../models/user";
 
-export const getUser = async (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) => {
+export const getUser = async ({
+  res,
+  next,
+}: {
+  res: express.Response;
+  next: express.NextFunction;
+}) => {
   let users;
   try {
     users = await User.find({}, "-password");
@@ -32,6 +34,7 @@ export const signup = async (
   next: express.NextFunction
 ) => {
   const errors = validationResult(req);
+  console.log(errors);
   if (!errors.isEmpty()) {
     return next(new HttpError("Please check your data.", 422));
   }
@@ -63,7 +66,7 @@ export const signup = async (
     name,
     email,
     password: hashedPassword,
-    image: req["file"]["path"],
+    image: req.file?.path,
   });
 
   try {

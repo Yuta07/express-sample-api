@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import mongoose from "mongoose";
@@ -7,6 +8,8 @@ import HttpError from "./models/http-error";
 import userRoutes from "./routes/users";
 
 import type { Express } from "express";
+
+dotenv.config();
 
 type Error = {
   code: number;
@@ -21,7 +24,7 @@ app.use(express.json());
 app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use(
-  (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  ({ res, next }: { res: express.Response; next: express.NextFunction }) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader(
       "Access-Control-Allow-Headers",
@@ -65,6 +68,7 @@ app.use(
 
 const port = process.env.PORT || 5000;
 
+console.log(process.env.MongoURL);
 mongoose
   .connect(process.env.MongoURL || "")
   .then(() => {

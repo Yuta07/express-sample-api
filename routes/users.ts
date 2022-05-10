@@ -2,13 +2,14 @@ import express from "express";
 import { check } from "express-validator";
 
 import { login, signup } from "../controllers/users";
-// import { fileUpload } from "../middleware/file-upload";
+import { checkAuth } from "../middleware/check-auth";
+import { fileUpload } from "../middleware/file-upload";
 
 const router = express.Router();
 
 router.post(
   "/signup",
-  // fileUpload.single('image'),
+  fileUpload.single("image"),
   [
     check("name").not().isEmpty(),
     check("email").normalizeEmail().isEmail(),
@@ -17,5 +18,7 @@ router.post(
   signup
 );
 router.post("/login", login);
+
+router.use(checkAuth);
 
 export default router;
